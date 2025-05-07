@@ -1,12 +1,12 @@
 import React from "react";
 import { Button, Text, View } from "react-native";
+import { style } from "./styles";
 
-export default function Login() {
+export default function FirstScreen() {
     return (
-        <View>
-
-
-        <Text>hello word!! 2</Text>
+        <View style={style.button}>
+            
+        <Text style={style.text}>hello word 2</Text>
 
         <Text></Text>
 

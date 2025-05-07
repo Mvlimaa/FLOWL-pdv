@@ -1,10 +1,15 @@
 import React from "react";
-import { Text } from "react-native";
+import { Button, Text, View } from "react-native";
 
 export default function Login() {
     return (
+        <View>
 
-        <Text>Olá</Text>
 
+        <Text>hello word!! 2</Text>
+
+        <Text></Text>
+
+        </View>
     )
 };

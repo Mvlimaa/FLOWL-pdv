@@ -10,11 +10,14 @@
   },
   "dependencies": {
     "expo": "~53.0.8",
+    "expo-linear-gradient": "~14.1.4",
     "expo-status-bar": "~2.2.3",
+    "flowl": "file:",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-native": "0.79.2",
-    "expo-linear-gradient": "~14.1.4"
+    "react-native-web": "^0.20.0",
+    "@expo/metro-runtime": "~5.0.4"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

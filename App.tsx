@@ -1,7 +1,12 @@
 import { useFonts } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import FirstScreen from './src/pages/firstScreen';
+import Login from "./src/pages/login";
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
 
@@ -14,11 +19,14 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      <FirstScreen/>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="First">
+        <Stack.Screen name="First" component={FirstScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Login" component={Login} options={{ title: "Login" }} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
+
 }
 
 const styles = StyleSheet.create({

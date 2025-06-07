@@ -5,6 +5,7 @@ export const style = StyleSheet.create({
     container:{
         width: '100%',
         height: '100%',
+
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'red'
@@ -13,11 +14,12 @@ export const style = StyleSheet.create({
         
     },
     button:{
-        display: "flex",
         backgroundColor:'#F9C74F',
         width:225,
         height: 90,
         borderRadius: 25,
+
+        display: "flex",
         alignItems: 'center',
         justifyContent: 'center'
 

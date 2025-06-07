@@ -4,8 +4,12 @@ import { styles } from "./styles";
 import {  Image, View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import axios from "axios";
 import { LinearGradient } from 'expo-linear-gradient';
+import { useNavigation } from "@react-navigation/native";
+
 
 export default function Login() {
+  const navigation = useNavigation();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -18,6 +22,7 @@ export default function Login() {
 
       if (response.status === 200) {
         Alert.alert("Login realizado!", `Token: ${response.data.token}`);
+
       } else {
         Alert.alert("Erro", "Credenciais inválidas! Verificar novamente ou entrar em contato com os Desenvolvedores")
       }     
@@ -50,11 +55,11 @@ return (
           value={password}
           onChangeText={setPassword}
           secureTextEntry 
-          style={[styles.input, { paddingLeft: 16,  marginTop: 20,}]}/> {/* estilos adicionados separadamente para nao bugar ocodigo,   margin top somente na senha para nao desalinhar os inputs do centro */}
+          style={[styles.input, { paddingLeft: 16,  marginTop: 20,}]}/> {/* estilos adicionados separadamente para nao bugar ocodigo, margin top somente na senha para nao desalinhar os inputs do centro */}
 
           <TouchableOpacity 
-            onPress={handleLogin}
-            style={styles.button}>
+            style={styles.button}
+            onPress={() => navigation.navigate("Home")}>
             <Text style={styles.buttonText}>Entrar</Text>
           </TouchableOpacity>
 

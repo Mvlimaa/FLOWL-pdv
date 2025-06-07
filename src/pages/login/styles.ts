@@ -23,11 +23,13 @@ export const styles = StyleSheet.create({
       position: "absolute",
       display: "flex",
       bottom: 0,
+
       backgroundColor: "white",
       width: "100%",
       height: "55%",
       padding: 16,
       borderRadius: 8,
+
       alignItems: "center",
       justifyContent: "center"
     },
@@ -42,6 +44,7 @@ export const styles = StyleSheet.create({
       paddingVertical: 10,
       paddingHorizontal: 120,
       borderRadius: 8,
+      
       alignItems: "center",
       justifyContent: "center"
     },

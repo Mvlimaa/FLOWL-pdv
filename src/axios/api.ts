@@ -1,10 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "https://nossa-api.com",
-    headers: {
-        "Content-Type": "aplication/json",  // Confirmar que o arquivo vai ser lido no formato JSON
-    },
+    baseURL: "http://26.183.174.132:8000",
 });
 
 export default api;

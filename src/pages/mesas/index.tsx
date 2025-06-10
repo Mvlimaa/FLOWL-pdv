@@ -1,53 +1,98 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import api from "../../axios/api";
 import { View, Text, Image, Modal, TouchableOpacity, TextInput, StyleSheet } from "react-native";
 import { styles } from "./styles";
 import { LinearGradient } from 'expo-linear-gradient';
 import BottomMenu from "../../components/reutilizaveis/BottomMenu";
 
 export default function Mesas() {
+
     const [mesaSelecionada, setMesaSelecionada] = useState<number | null>(null);
-    const [ocupadas, setOcupadas] = useState<number[]>([4, 8, 10]); 
+    const [mesas, setMesas] = useState<{ id: number; numero: number; status: string; }[]>([]);
     const [modalVisible, setModalVisible] = useState(false);
 
+    useEffect(() => {
+        const buscarMesas = async () => {
+            try {
+                const response = await api.get("/mesas");
+                console.log("Mesas da API: ", response.data)
+                setMesas(response.data);
+            } catch (error) {
+                console.error("Erro ao buscar mesas:", error);
+            }
+        };
 
-    const toggleMesa = (mesa: number) => {
-        if (ocupadas.includes(mesa)) return;
-        setMesaSelecionada(mesa);
+    buscarMesas();
+}, []);
+
+
+    const toggleMesa = (mesaId: number) => {
+        const mesaInfo = mesas.find((m) => m.id === mesaId);
+        if(mesaInfo?.status ==="aberta") return;
+        setMesaSelecionada(mesaId)
     };
 
     const handleSalvar = () => {
         setModalVisible(true);
     };
 
-    const confirmarCriacao = () => {
-        if (mesaSelecionada !== null && !ocupadas.includes(mesaSelecionada)) {
-            setOcupadas(prev => [...prev, mesaSelecionada]);
-            setMesaSelecionada(null);
-        }
+    const confirmarCriacao = async () => {
+        if (mesaSelecionada === null) return;
+
+        try {
+            await api.put(`/mesas/${mesaSelecionada}/status?status=aberta`);
+
+            setMesas(prevMesas =>
+                prevMesas.map((m) =>
+                    m.id === mesaSelecionada ? { ...m, status: "aberta"} : m
+                )
+            );
+        
+
+        setMesaSelecionada(null);
         setModalVisible(false);
+    } catch (error: any) {
+        console.error("erro ao atualizar a mesa:", error);
+        console.log("Erro completo", error)
     };
+}
 
     return (
         <LinearGradient colors={['#D62828', '#701515']} style={styles.container}>
             <View style={styles.box}>
-                {Array.from({ length: 16 }, (_, i) => {
-                    const mesa = i + 1;
-                    const isOcupada = ocupadas.includes(mesa);
+                {mesas.map((mesa) => {
+                    const isOcupada = mesa.status === "aberta";
+                    const isSelecionada = mesaSelecionada === mesa.id;
+
                     const estiloBase = isOcupada ? styles.mesaOcupada : styles.mesaDisponivel;
                     const estiloMesa = [
                         estiloBase,
-                        mesaSelecionada === mesa && !isOcupada ? styles.mesaSelecionada : null,
+                        isSelecionada && !isOcupada ? styles.mesaSelecionada : null,
                     ];
 
                     return (
-                        <TouchableOpacity key={mesa} style={estiloMesa} onPress={() => toggleMesa(mesa)}>
-                            <Text style={styles.numMesa}>{mesa}</Text>
+                        <TouchableOpacity
+                            key={mesa.id}
+                            style={estiloMesa}
+                            onPress={() => {
+                                if (!isOcupada) setMesaSelecionada(mesa.id);
+                            }}
+                        >
+                            <Text style={styles.numMesa}>{mesa.numero}</Text>
                             <Image
-                                source={require('../../assets/adaptive-icon.png')}
-                                style={{ width: 40, height: 40, marginBottom: '5%', opacity: 0.45, position: 'absolute' }}
+                                source={require("../../assets/adaptive-icon.png")}
+                                style={{
+                                    width: 40,
+                                    height: 40,
+                                    marginBottom: "5%",
+                                    opacity: 0.45,
+                                    position: "absolute",
+                                }}
                             />
+
                         </TouchableOpacity>
                     );
+                    
                 })}
             </View>
 

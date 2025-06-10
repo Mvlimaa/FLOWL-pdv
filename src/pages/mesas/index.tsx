@@ -7,10 +7,11 @@ import BottomMenu from "../../components/reutilizaveis/BottomMenu";
 
 export default function Mesas() {
 
+    
     const [mesaSelecionada, setMesaSelecionada] = useState<number | null>(null);
     const [mesas, setMesas] = useState<{ id: number; numero: number; status: string; }[]>([]);
     const [modalVisible, setModalVisible] = useState(false);
-
+    
     useEffect(() => {
         const buscarMesas = async () => {
             try {
@@ -21,10 +22,11 @@ export default function Mesas() {
                 console.error("Erro ao buscar mesas:", error);
             }
         };
-
-    buscarMesas();
-}, []);
-
+        
+        buscarMesas();
+    }, []);
+    
+    const mesasAbertas = mesas.filter((mesa) => mesa.status === "aberta")
 
     const toggleMesa = (mesaId: number) => {
         const mesaInfo = mesas.find((m) => m.id === mesaId);

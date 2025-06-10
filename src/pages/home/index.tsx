@@ -1,14 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import api from "../../axios/api";
 import { View, Text, Image, Modal, TouchableOpacity, TextInput, StyleSheet } from "react-native";
 import { styles } from "./styles";
 import { LinearGradient } from 'expo-linear-gradient';
 import BottomMenu from "../../components/reutilizaveis/BottomMenu";
 import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
 
 
 export default function Home() {
     const navigation = useNavigation();
 
+    const [mesasAbertas, setMesasAbertas] = useState<{ id: number; numero: number; status: string } []>([]);
+
+    useEffect(() => {
+        const buscarMesasAbertas = async () => {
+            try {
+                const response = await api.get("/mesas/abertas");
+                setMesasAbertas(response.data);
+            } catch (error) {
+                console.error("Erro ao buscar mesas abertas: ", error)
+            }
+        };
+
+        buscarMesasAbertas();
+    }, []);
 
     return (
 
@@ -24,18 +41,26 @@ export default function Home() {
             </View>
 
             <View style={styles.box}>
-                <TouchableOpacity onPress={() => navigation.navigate("DetalhesMesa")} 
-                style={styles.mesa}>
-                    
-                    <Text style={{ fontSize: 15,   marginLeft: 10, alignItems:"center" }}    >Mesa 1
-                    <Image 
-                    source={require('../../assets/next.png')}
-                    style={{ width: 15, height: 15,    marginLeft: "70%", marginTop: 4,   alignItems: "center" }}
-                    />
-                    </Text>
+                {mesasAbertas.map((mesa) => (
+                    <TouchableOpacity
+                    key={mesa.id}
+                    style={styles.mesa}
+                    onPress={() => navigation.navigate('DetalhesMesa', { mesa })}
+                    >
+                        <Text>Mesa {mesa.numero}</Text>
 
-                </TouchableOpacity>
-                
+                        <Image 
+                        source={require("../../assets/next.png")}
+                        style={{
+                            width: 25,
+                            height:25,
+                            marginLeft: "80%",
+                            opacity: 0.45,
+                            position: "absolute",
+                        }}
+                    />
+                    </TouchableOpacity>
+                ))}
 
             </View>
 

@@ -8,11 +8,13 @@ import Login from "./src/pages/login";
 import Mesas from "./src/pages/mesas";
 import Home from "./src/pages/home";
 import DetalhesMesa from "./src/pages/detalhesMesa";
+import Cardapio from "./src/pages/cardapio";
 
 
- 
 
 const Stack = createNativeStackNavigator();
+
+
 
 
 export default function App() {
@@ -35,6 +37,7 @@ export default function App() {
         options={{title: "Home"}} />
         <Stack.Screen name="Mesas" component={Mesas} options={{title: "Mesas"}} />
         <Stack.Screen name="DetalhesMesa" component={DetalhesMesa} options={{title: "DetalhesMesa"}} />
+        <Stack.Screen name="Cardapio" component={Cardapio} options={{title: "Cardápio"}} />
       </Stack.Navigator>
       
     </NavigationContainer>

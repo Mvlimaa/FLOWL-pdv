@@ -49,12 +49,12 @@ const handleLogin = async () => {
 
 return (
   <LinearGradient
-        colors={['#D62828', '#701515']}
+        colors={['#7E7E7E', '#FAFAFA']}
         style={styles.container}
       >
     <Image
-      source={require('../../assets/adaptive-icon.png')}
-      style={{ width: 150, height: 150, marginBottom: '5%' }}/>
+      source={require('../../assets/icon.png')}
+      style={{ width: 200, height: 200 }}/>
 
     <Text style={styles.title}>Login</Text>
 
@@ -87,8 +87,8 @@ return (
         Entre em Contato com os DESENVOLVEDORES!
         </Text>
       </Text>
-      {erro ? <Text style={{ color: "yellow", marginTop: 10 }}>{erro}</Text> : null}
-      
+      {erro ? <Text style={{ color: "red", fontSize: 14, marginTop: 10 }}>{erro}</Text> : null}
+
 
     </View>
 

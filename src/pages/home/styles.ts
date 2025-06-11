@@ -50,7 +50,14 @@ export const styles = StyleSheet.create({
         marginBottom: 20,
         paddingVertical: 10,
         paddingHorizontal: 85,
-  
+        
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.5,
+        shadowRadius: 4,
     },
 
     buttonText: {

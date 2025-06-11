@@ -9,13 +9,13 @@ export default function FirstScreen() {
 
   return (
     <LinearGradient
-      colors={['#D62828', '#701515']}
+      colors={['#7E7E7E', '#FAFAFA']}
       style={style.container}
     >
       <View style={style.logo}>
         <Image
-          source={require('../../assets/adaptive-icon.png')}
-          style={{ width: 150, height: 150, marginBottom: '60%' }}
+          source={require('../../assets/icon.png')}
+          style={{ width: 300, height: 300, marginBottom: '35%' }}
         />
       </View>
 

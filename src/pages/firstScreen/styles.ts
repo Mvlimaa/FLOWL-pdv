@@ -8,26 +8,33 @@ export const style = StyleSheet.create({
 
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'red'
     },
     logo:{
-        
+        marginBottom: '30%'
     },
     button:{
-        backgroundColor:'#F9C74F',
+        backgroundColor:'black',
         width:225,
         height: 90,
         borderRadius: 25,
 
         display: "flex",
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
 
+        shadowColor: 'black',
+        shadowOffset: {
+            width: 0,
+            height: 20,
+        },
+        shadowOpacity: 0.4,
+        shadowRadius: 7,
+        elevation: 3,
     },
     text:{
         fontFamily: 'Pacifico',
         fontSize: 25,
-        color:'black',
+        color:'white',
         textAlign: 'center',
     }
 })

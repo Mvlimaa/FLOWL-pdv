@@ -5,9 +5,9 @@ import { Button, StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
     container:{
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
          
     },
 
@@ -15,20 +15,20 @@ export const styles = StyleSheet.create({
       fontFamily: 'Pacifico',
       color: "white",
       fontSize: 50,
-      marginBottom: 360,
+      marginTop: 10,
+      marginBottom: 440,
       textAlign: "center",
     },
 
     box: {
       position: "absolute",
-      display: "flex",
       bottom: 0,
 
       backgroundColor: "white",
       width: "100%",
       height: "55%",
       padding: 16,
-      borderRadius: 8,
+      borderRadius: 40,
 
       alignItems: "center",
       justifyContent: "center"
@@ -59,8 +59,8 @@ export const styles = StyleSheet.create({
 
     warn: {
       color: "blue",
-      fontSize: 15,
-      marginLeft: "50%",
+      fontSize: 20,
+      textAlign: "center",
       marginTop: "10%"
     },
 

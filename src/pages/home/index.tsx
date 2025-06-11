@@ -29,11 +29,11 @@ export default function Home() {
 
     return (
 
-        <LinearGradient colors={['#D62828', '#701515']} style={styles.container}>
+        <LinearGradient colors={['#7E7E7E', '#FAFAFA']} style={styles.container}>
             
             <View style={styles.logo}>
                 <Image 
-                    source={require('../../assets/adaptive-icon.png')}
+                    source={require('../../assets/icon-hamburgueria.png')}
                     style={{ width: 125, height: 125 }}
                 />
                 <Text style={{ textAlign: "center",fontSize: 15, fontFamily: 'Pacifico', color: "white" }}> Brabu's Burguer 
@@ -47,7 +47,7 @@ export default function Home() {
                     style={styles.mesa}
                     onPress={() => navigation.navigate('DetalhesMesa', { mesa })}
                     >
-                        <Text>Mesa {mesa.numero}</Text>
+                        <Text style={{ fontSize: 15, color: "black", fontFamily: 'Pacifico', marginLeft: 10 }}>Mesa {mesa.numero}</Text>
 
                         <Image 
                         source={require("../../assets/next.png")}

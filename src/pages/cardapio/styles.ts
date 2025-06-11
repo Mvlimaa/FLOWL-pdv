@@ -3,127 +3,85 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    paddingTop: 40,
+    paddingTop: 48,
     paddingHorizontal: 16,
   },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 10,
-  },
   title: {
-    fontSize: 22,
+    color: "#fff",
+    fontSize: 28,
     fontWeight: "bold",
-    color: "#222",
-  },
-  icon: {
-    width: 24,
-    height: 24,
-    tintColor: "#222",
+    marginBottom: 16,
+    alignSelf: "center",
   },
   categorias: {
-    flexDirection: "row",
-    marginBottom: 10,
+    marginBottom: 16,
+    maxHeight: 50,
   },
-  categoria: {
-    fontSize: 16,
-    color: "#888",
-    marginRight: 18,
-    fontWeight: "500",
+  categoriaBtn: {
+    paddingVertical: 8,
+    paddingHorizontal: 18,
+    borderRadius: 20,
+    backgroundColor: "#fff2",
+    marginRight: 10,
   },
-  categoriaAtiva: {
-    fontSize: 16,
-    color: "#222",
-    marginRight: 18,
-    fontWeight: "bold",
-    borderBottomWidth: 2,
-    borderBottomColor: "#222",
-    paddingBottom: 2,
-  },
-  section: {
-    marginBottom: 18,
-  },
-  sectionHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 6,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#222",
-  },
-  verTodos: {
-    fontSize: 14,
-    color: "#888",
-    fontWeight: "500",
-  },
-  cardPromo: {
-    flexDirection: "row",
+  categoriaBtnAtiva: {
     backgroundColor: "#fff",
-    borderRadius: 12,
-    elevation: 2,
-    marginBottom: 10,
-    padding: 10,
-    alignItems: "flex-start",
   },
-  cardBurger: {
-    flexDirection: "row",
-    backgroundColor: "#fff",
-    borderRadius: 12,
-    elevation: 1,
-    marginBottom: 10,
-    padding: 10,
-    alignItems: "flex-start",
-  },
-  cardImage: {
-    width: 70,
-    height: 70,
-    borderRadius: 10,
-    marginRight: 12,
-  },
-  tagPromo: {
-    backgroundColor: "#222",
-    borderRadius: 6,
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-    alignSelf: "flex-start",
-    marginBottom: 2,
-  },
-  tagPromoText: {
+  categoriaText: {
     color: "#fff",
-    fontSize: 11,
     fontWeight: "bold",
   },
-  cardNome: {
+  categoriaTextAtiva: {
+    color: "#D62828",
+  },
+  produtosWrapper: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    paddingBottom: 80,
+  },
+  produtoCard: {
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    padding: 16,
+    margin: 8,
+    width: 160,
+    alignItems: "center",
+    elevation: 2,
+  },
+  produtoNome: {
+    fontWeight: "bold",
     fontSize: 16,
-    fontWeight: "bold",
+    marginBottom: 4,
     color: "#222",
-    marginBottom: 2,
   },
-  cardDescricao: {
+  produtoCategoria: {
     fontSize: 13,
-    color: "#666",
-    marginBottom: 2,
+    color: "#555",
+    marginBottom: 4,
   },
-  precoOriginal: {
-    fontSize: 13,
-    color: "#888",
-    textDecorationLine: "line-through",
-    marginRight: 4,
-  },
-  precoPromocional: {
-    fontSize: 14,
-    color: "#1DB954",
-    fontWeight: "bold",
-  },
-  precoBurger: {
+  produtoPreco: {
     fontSize: 15,
-    color: "#222",
+    color: "#1976d2",
     fontWeight: "bold",
-    marginTop: 2,
   },
+  erro: {
+    color: "#fff",
+    textAlign: "center",
+    marginTop: 32,
+    fontSize: 16,
+  },
+
+  adicionarBtn: {
+  marginTop: 8,
+  backgroundColor: "#1976d2",
+  paddingVertical: 6,
+  paddingHorizontal: 16,
+  borderRadius: 6,
+},
+
+adicionarBtnText: {
+  color: "#fff",
+  fontWeight: "bold",
+},
 });

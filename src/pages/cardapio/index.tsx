@@ -1,118 +1,87 @@
-import React, { useState } from "react";
-import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
+import React, { useEffect, useState } from "react";
+import api from "../../axios/api";
+import { View, Text, ScrollView, TouchableOpacity, ActivityIndicator } from "react-native";
+import { LinearGradient } from 'expo-linear-gradient';
+import BottomMenu from "../../components/reutilizaveis/BottomMenu";
 import { styles } from "./styles";
 
-
-interface Produto {
+type Produto = {
   id: number;
   nome: string;
-  descricao: string;
-  preco: number;
-  imagem: any;
-}
-
-
-const burgers = [
-  {
-    id: 1,
-    nome: "Alabama Apimentado",
-    descricao: "Pão americano, hambúrguer 140g, queijo cheddar, bacon, alface...",
-    preco: 20.0,
-    imagem: require("../../assets/icon.png"),
-  },
-  {
-    id: 2,
-    nome: "Alabama Bacon Duplo",
-    descricao: "Pão americano, blend 150g, queijo cheddar, bacon, alface...",
-    preco: 26.0,
-    imagem: require("../../assets/icon.png"),
-  },
-];
-
-const batatas = [
-  {
-    id: 3,
-    nome: "Batata Frita",
-    descricao: "Porção de batata frita crocante.",
-    preco: 12.0,
-    imagem: require("../../assets/icon.png"),
-  },
-];
-
-const sobremesas = [
-  {
-    id: 4,
-    nome: "Pudim",
-    descricao: "Pudim de leite condensado tradicional.",
-    preco: 8.0,
-    imagem: require("../../assets/icon.png"),
-  },
-];
-
-const bebidas = [
-  {
-    id: 5,
-    nome: "Refrigerante Lata",
-    descricao: "Coca-Cola, Guaraná, Fanta, etc.",
-    preco: 6.0,
-    imagem: require("../../assets/icon.png"),
-  },
-];
+  preco: string;
+  categoria: "hamburguer" | "batata" | "bebida" | "sobremesa";
+};
 
 const categorias = [
-  { key: "burgers", label: "Hambúrguer" },
-  { key: "batatas", label: "Batatas" },
-  { key: "sobremesas", label: "Sobremesa" },
-  { key: "bebidas", label: "Bebidas" },
+  { key: "hamburguer", label: "Hambúrguer" },
+  { key: "batata", label: "Batata" },
+  { key: "bebida", label: "Bebida" },
+  { key: "sobremesa", label: "Sobremesa" },
 ];
 
 export default function Cardapio() {
-  const [categoriaAtiva, setCategoriaAtiva] = useState("burgers");
+  const [produtos, setProdutos] = useState<Produto[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [erro, setErro] = useState("");
+  const [categoriaAtiva, setCategoriaAtiva] = useState<Produto["categoria"]>("hamburguer");
 
-  let lista: Produto[] = [];
-  if (categoriaAtiva === "burgers") lista = burgers;
-  if (categoriaAtiva === "batatas") lista = batatas;
-  if (categoriaAtiva === "sobremesas") lista = sobremesas;
-  if (categoriaAtiva === "bebidas") lista = bebidas;
-  
+  useEffect(() => {
+    const buscarProdutos = async () => {
+      try {
+        const response = await api.get("/produtos/");
+        setProdutos(response.data);
+      } catch (error) {
+        setErro("Erro ao carregar produtos");
+      } finally {
+        setLoading(false);
+      }
+    };
+    buscarProdutos();
+  }, []);
+
+  const produtosFiltrados = produtos.filter(p => p.categoria === categoriaAtiva);
+
   return (
-    <View style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.title}>Cardápio</Text>
-        <TouchableOpacity>
-          <Image source={require("../../assets/icon.png")} style={styles.icon} />
-        </TouchableOpacity>
-      </View>
+    <LinearGradient colors={['#D62828', '#701515']} style={styles.container}>
+      <Text style={styles.title}>Cardápio</Text>
 
-      {/* Categorias */}
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.categorias}>
         {categorias.map(cat => (
           <TouchableOpacity
             key={cat.key}
-            onPress={() => setCategoriaAtiva(cat.key)}
+            style={[
+              styles.categoriaBtn,
+              categoriaAtiva === cat.key && styles.categoriaBtnAtiva
+            ]}
+            onPress={() => setCategoriaAtiva(cat.key as Produto["categoria"])}
           >
-            <Text style={categoriaAtiva === cat.key ? styles.categoriaAtiva : styles.categoria}>
+            <Text style={[
+              styles.categoriaText,
+              categoriaAtiva === cat.key && styles.categoriaTextAtiva
+            ]}>
               {cat.label}
             </Text>
           </TouchableOpacity>
         ))}
       </ScrollView>
 
-      {/* Lista da categoria ativa */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>{categorias.find(c => c.key === categoriaAtiva)?.label}</Text>
-        {lista.map(item => (
-          <View key={item.id} style={styles.cardBurger}>
-            <Image source={item.imagem} style={styles.cardImage} />
-            <View style={{ flex: 1 }}>
-              <Text style={styles.cardNome}>{item.nome}</Text>
-              <Text style={styles.cardDescricao}>{item.descricao}</Text>
-              <Text style={styles.precoBurger}>R$ {item.preco.toFixed(2)}</Text>
+      {loading ? (
+        <ActivityIndicator size="large" color="#fff" style={{ marginTop: 32 }} />
+      ) : erro ? (
+        <Text style={styles.erro}>{erro}</Text>
+      ) : (
+        <ScrollView contentContainerStyle={styles.produtosWrapper}>
+          {produtosFiltrados.map(produto => (
+            <View key={produto.id} style={styles.produtoCard}>
+              <Text style={styles.produtoNome}>{produto.nome}</Text>
+              <Text style={styles.produtoCategoria}>Categoria: {produto.categoria}</Text>
+              <Text style={styles.produtoPreco}>Preço: R$ {produto.preco}</Text>
             </View>
-          </View>
-        ))}
-      </View>
-    </View>
+          ))}
+        </ScrollView>
+      )}
+
+      <BottomMenu />
+    </LinearGradient>
   );
 }

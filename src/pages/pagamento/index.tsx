@@ -24,7 +24,7 @@ export default function Pagamento({ visible, onClose, valor, mesa, status, forma
     return <Image source={require("../../assets/icon.png")} style={styles.progressImg} />;
   };
   
-  // Mensagem de status
+
   const getStatusMessage = () => {
     if (status === "sucesso") return "Pagamento aprovado!";
     if (status === "erro") return "Pagamento recusado!";
@@ -63,15 +63,17 @@ export default function Pagamento({ visible, onClose, valor, mesa, status, forma
               <Text style={styles.detailLabel}>Mesa</Text>
               <Text style={styles.detailValue}>{mesa}</Text>
             </View>
+
             <View style={styles.detailRow}>
               <Text style={styles.detailLabel}>Forma de pagamento</Text>
               <Text style={styles.detailValue}>{formaPagamento}</Text>
             </View>
+
             <View style={styles.detailRow}>
               <Text style={styles.detailLabel}>Status</Text>
               <Text style={styles.detailValue}>{getStatusMessage()}</Text>
             </View>
-            {/* Adicione mais detalhes se desejar */}
+          
           </View>
 
           {/* Botão de fechar extra */}

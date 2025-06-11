@@ -51,6 +51,7 @@ export const styles = StyleSheet.create({
 
     button: {
       backgroundColor: "#000",
+
       marginTop: 20,
       paddingVertical: 10,
       paddingHorizontal: 85,
@@ -59,6 +60,7 @@ export const styles = StyleSheet.create({
 
     warn: {
       color: "blue",
+      
       fontSize: 20,
       textAlign: "center",
       marginTop: "10%"

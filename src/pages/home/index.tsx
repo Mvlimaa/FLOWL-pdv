@@ -1,15 +1,15 @@
+import BottomMenu from "../../components/reutilizaveis/BottomMenu";
 import React, { useState, useEffect } from "react";
-import api from "../../axios/api";
 import { View, Text, Image, Modal, TouchableOpacity, TextInput, StyleSheet } from "react-native";
 import { styles } from "./styles";
+import api from "../../axios/api";
 import { LinearGradient } from 'expo-linear-gradient';
-import BottomMenu from "../../components/reutilizaveis/BottomMenu";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 
 
-export default function Home() {
+export default function Home() {        // Pega na API as mesas abertas e exibe na tela inicial
     const navigation = useNavigation();
 
     const [mesasAbertas, setMesasAbertas] = useState<{ id: number; numero: number; status: string } []>([]);
@@ -31,23 +31,34 @@ export default function Home() {
 
         <LinearGradient colors={['#7E7E7E', '#FAFAFA']} style={styles.container}>
             
-            <View style={styles.logo}>
+            <View 
+            style={styles.logo}>
                 <Image 
                     source={require('../../assets/icon-hamburgueria.png')}
                     style={{ width: 125, height: 125 }}
                 />
-                <Text style={{ textAlign: "center",fontSize: 15, fontFamily: 'Pacifico', color: "white" }}> Brabu's Burguer 
+                <Text 
+                    style={{ textAlign: "center",
+                    fontSize: 15,
+                    fontFamily: 'Pacifico',
+                    color: "white" }}> Brabu's Burguer 
                 </Text>
             </View>
 
-            <View style={styles.box}>
+            <View 
+            style={styles.box}>
                 {mesasAbertas.map((mesa) => (
                     <TouchableOpacity
                     key={mesa.id}
                     style={styles.mesa}
                     onPress={() => navigation.navigate('DetalhesMesa', { mesa })}
                     >
-                        <Text style={{ fontSize: 15, color: "black", fontFamily: 'Pacifico', marginLeft: 10 }}>Mesa {mesa.numero}</Text>
+                        <Text 
+                            style={{ fontSize: 15, 
+                            color: "black", 
+                            fontFamily: 'Pacifico', 
+                            marginLeft: 10 }}>Mesa {mesa.numero}
+                        </Text>
 
                         <Image 
                         source={require("../../assets/next.png")}
@@ -68,7 +79,7 @@ export default function Home() {
             
             <TouchableOpacity 
                 style={styles.button}
-                onPress={() => navigation.navigate("Mesas")}>
+                onPress={() => navigation.navigate("Mesas")}> 
                 <Text style={styles.buttonText}>Ir para mesas</ Text>
               </TouchableOpacity>
 

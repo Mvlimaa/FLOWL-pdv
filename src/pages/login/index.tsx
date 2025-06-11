@@ -7,30 +7,45 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from "@react-navigation/native";
 
 
+async function loginComCpf(cpf: string, senha: string) {
+  try {
+    const params = new URLSearchParams();
+    params.append("username", cpf);
+    params.append("password", senha);
+
+    const response = await api.post("/usuarios/login", params, {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    });
+
+    return response.data;
+  } catch (error: any) {
+    if (error.response?.status === 422) {
+      throw new Error("CPF ou senha inválidos");
+    }
+    throw new Error("Erro ao realizar login. Tente novamente.");
+  }
+}
+
+
 export default function Login() {
   const navigation = useNavigation();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [senha, setSenha] = useState("");
+  const [erro, setErro] = useState("");
 
-  const handleLogin = async() => {     // Funcao executada ao clicar em ENTRAR
-    try {
-      const response = await api.post("/login", {
-        email,
-        password
-      });
-
-      if (response.status === 200) {
-        Alert.alert("Login realizado!", `Token: ${response.data.token}`);
-
-      } else {
-        Alert.alert("Erro", "Credenciais inválidas! Verificar novamente ou entrar em contato com os Desenvolvedores")
-      }     
-    } catch (error) {
-      Alert.alert("Erro", "Falha na conexão com o servidor");
-      console.error(error);
-    }
-  };
+  
+const handleLogin = async () => {
+  try {
+    const data = await loginComCpf(cpf, senha);
+    Alert.alert("Login realizado!", `Token: ${data.token || "Sucesso"}`);
+    navigation.navigate("Home"); 
+  } catch (err: any) {
+    setErro(err.message);
+  }
+}
 
 return (
   <LinearGradient
@@ -46,20 +61,21 @@ return (
     <View style={styles.box}>
       <View style={styles.inputs}>
 
-        <TextInput placeholder="Email" //Valor dentro da box
-          value={email} //Sincroniza o estado
-          onChangeText={setEmail} // Atualiza o valor quando digitado pelo usuário
+        <TextInput placeholder="CPF" //Valor dentro da box
+          value={cpf} //Sincroniza o estado
+          onChangeText={setCpf} // Atualiza o valor quando digitado pelo usuário
           style={[styles.input, { paddingLeft: 16}]} />
 
         <TextInput placeholder="Senha" 
-          value={password}
-          onChangeText={setPassword}
+          value={senha}
+          onChangeText={setSenha}
           secureTextEntry 
           style={[styles.input, { paddingLeft: 16,  marginTop: 20,}]}/> {/* estilos adicionados separadamente para nao bugar ocodigo, margin top somente na senha para nao desalinhar os inputs do centro */}
 
           <TouchableOpacity 
             style={styles.button}
-            onPress={() => navigation.navigate("Home")}>
+            onPress={handleLogin}
+            >
             <Text style={styles.buttonText}>Entrar</Text>
           </TouchableOpacity>
 
@@ -71,12 +87,12 @@ return (
         Entre em Contato com os DESENVOLVEDORES!
         </Text>
       </Text>
+      {erro ? <Text style={{ color: "yellow", marginTop: 10 }}>{erro}</Text> : null}
       
-
 
     </View>
 
-    
+
   </LinearGradient>
   );
 }

@@ -84,4 +84,11 @@ adicionarBtnText: {
   color: "#fff",
   fontWeight: "bold",
 },
+categoriaBtnText: {
+  color: "#fff",
+  fontWeight: "bold",
+},
+categoriaBtnTextAtiva: {
+  color: "#D62828",
+},
 });

@@ -13,12 +13,35 @@ interface Mesa {
     status: string;
 }
 
+interface Produto {
+  id: number;
+  nome: string;
+  preco: number;
+  categoria: "hamburguer" | "batata" | "bebida" | "sobremesa";
+}
+
+interface ItemPedido {
+  produto_id: number;
+  quantidade: number;
+}
+
 interface Pedido {
     id: number;
     nome: string;
     preco: number;
     quantidade: number;
-    imagem: any;
+    mesa_id: number;
+    garcom_id: number;
+    status?: string;
+    itens: ItemPedido[];
+}
+
+interface PedidoDetalhado {
+  id: number;
+  nome: string;
+  preco: number;
+  quantidade: number;
+  imagem: any;
 }
 
 
@@ -27,28 +50,47 @@ export default function DetalhesMesa() {
     const navigation = useNavigation();
     const { mesa } = route.params as { mesa: any };
 
+
     const [showPagamento, setShowPagamento] = useState(false);
+    const [pedidos, setPedidos] = useState<PedidoDetalhado[]>([]); 
+    const [produtos, setProdutos] = useState<Produto[]>([]);
 
+    React.useEffect(() => {
+      const fetchPedidosEProdutos = async () => {
+      try {
+        const produtosResp = await api.get(`/produtos`);
+        setProdutos(produtosResp.data);
 
-    // Mock de pedidos para exemplo
-    const [pedidos, setPedidos] = useState<Pedido[]>([
-        {
-            id: 1,
-            nome: "Pudim Premium",
-            preco: 14.99,
-            quantidade: 8,
-            imagem: require("../../assets/icon.png"),
-        },
-        {
-            id: 2,
-            nome: "X Baratinha",
-            preco: 24.99,
-            quantidade: 5,
-            imagem: require("../../assets/icon.png"),
-        },
-    ]);
+        const pedidosResp = await api.get(`/pedidos/mesa/${mesa.id}`);
+        const pedidosAPI: Pedido[] = pedidosResp.data;
+
+        const pedidosDetalhados: PedidoDetalhado[] = [];
+        pedidosAPI.forEach(pedido => {
+          pedido.itens.forEach(item => {
+            const produto = produtosResp.data.find((p: Produto) => p.id === item.produto_id);
+            if (produto) {
+              pedidosDetalhados.push({
+                id: pedido.id,
+                nome: produto.nome,
+                preco: Number(produto.preco),
+                quantidade: item.quantidade,
+                imagem: require("../../assets/icon.png") // Supondo que o produto tenha uma propriedade imagem
+              });
+            }
+          });
+        });
+      setPedidos(pedidosDetalhados);
+    } catch (error) {
+      console.error("Erro ao buscar produtos:", error);
+    }
+  };
+  fetchPedidosEProdutos();
+}, [mesa.id]);
 
     const subtotal = pedidos.reduce((acc, p) => acc + p.preco * p.quantidade, 0);
+
+    const [statusPagamento, setStatusPagamento] = useState<"sucesso" | "processando" | "erro">("processando");
+    const [formaPagamentoSelecionada, setFormaPagamentoSelecionada] = useState<string>("");
 
     const cancelarPedido = (id: number) => {
         setPedidos(pedidos.filter(p => p.id !== id));
@@ -97,7 +139,7 @@ export default function DetalhesMesa() {
 
       <TouchableOpacity
        style={styles.cardapioBtn}
-       onPress={() =>navigation.navigate("Cardapio")}
+       onPress={() =>navigation.navigate("Cardapio", { mesa })}
        >
         <Text style={styles.cardapioBtnText}>Cardápio</Text>
         <Image source={require("../../assets/icon.png")} style={styles.cardapioBtnIcon} />
@@ -111,7 +153,13 @@ export default function DetalhesMesa() {
         <Image source={require("../../assets/icon.png")} style={styles.pagamentoBtnIcon} />
       </TouchableOpacity>
 
-      <Pagamento visible={showPagamento} onClose={() => setShowPagamento(false)} />
+      <Pagamento visible={showPagamento}
+        onClose={() => setShowPagamento(false)}
+        valor={subtotal} 
+        mesa={mesa.numero}
+        status={statusPagamento}
+        formaPagamento={formaPagamentoSelecionada}
+        />
 
       <TouchableOpacity 
       style={styles.fecharMesaBtn}

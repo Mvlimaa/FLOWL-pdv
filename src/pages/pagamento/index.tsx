@@ -1,15 +1,35 @@
-import React, { useState } from "react";
-import { View, Text, Modal, TouchableOpacity, StyleSheet, Image } from "react-native";
+import React from "react";
+import { View, Text, Modal, TouchableOpacity, Image } from "react-native";
 import { styles } from "./styles";
-
 
 interface PagamentoProps {
   visible: boolean;
   onClose: () => void;
+  valor: number;
+  mesa: number;
+  status: "sucesso" | "processando" | "erro";
+  formaPagamento: string;
 }
 
-export default function Pagamento({ visible, onClose }: PagamentoProps) {
-    
+export default function Pagamento({ visible, onClose, valor, mesa, status, formaPagamento }: PagamentoProps) {
+  // Ícone/status visual
+  const getStatusIcon = () => {
+    if (status === "sucesso") {
+      return <Image source={require("../../assets/icon.png")} style={styles.progressImg} />;
+    }
+    if (status === "erro") {
+      return <Image source={require("../../assets/icon.png")} style={styles.progressImg} />;
+    }
+    return <Image source={require("../../assets/icon.png")} style={styles.progressImg} />;
+  };
+  
+  // Mensagem de status
+  const getStatusMessage = () => {
+    if (status === "sucesso") return "Pagamento aprovado!";
+    if (status === "erro") return "Pagamento recusado!";
+    return "Processando pagamento...";
+  };
+
   return (
     <Modal
       visible={visible}
@@ -24,49 +44,39 @@ export default function Pagamento({ visible, onClose }: PagamentoProps) {
             <Text style={styles.closeText}>×</Text>
           </TouchableOpacity>
 
-          {/* Barra de progresso fake */}
+          {/* Status visual */}
           <View style={styles.progressContainer}>
-            <Image source={require("../../assets/icon.png")} style={styles.progressImg} />
+            {getStatusIcon()}
           </View>
 
-          {/* Status */}
-          <Text style={styles.statusTitle}>Payment Status</Text>
+          {/* Status e valor */}
+          <Text style={styles.statusTitle}>{getStatusMessage()}</Text>
           <View style={styles.amountBox}>
-            <Text style={styles.amountLabel}>Your payment received</Text>
-            <Text style={styles.amountValue}>USD 1000.00</Text>
+            <Text style={styles.amountLabel}>Valor total</Text>
+            <Text style={styles.amountValue}>R$ {typeof valor === "number" && !isNaN(valor) ? valor.toFixed(2) : "0.00"}</Text>
           </View>
 
-          {/* Detalhes */}
+          {/* Detalhes do pagamento */}
           <View style={styles.detailsBox}>
             <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>Transfer ID</Text>
-              <Text style={styles.detailValue}>0000000</Text>
+              <Text style={styles.detailLabel}>Mesa</Text>
+              <Text style={styles.detailValue}>{mesa}</Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>Forma de pagamento</Text>
+              <Text style={styles.detailValue}>{formaPagamento}</Text>
             </View>
             <View style={styles.detailRow}>
               <Text style={styles.detailLabel}>Status</Text>
-              <Text style={styles.detailValue}>Received</Text>
+              <Text style={styles.detailValue}>{getStatusMessage()}</Text>
             </View>
-            <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>You transfer</Text>
-              <Text style={styles.detailValue}>USD 1000.00</Text>
-            </View>
-            <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>Transfer fee</Text>
-              <Text style={styles.detailValue}>Free</Text>
-            </View>
-            <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>Total amount</Text>
-              <Text style={styles.detailValue}>USD 1000.00</Text>
-            </View>
-            <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>Date</Text>
-              <Text style={styles.detailValue}>20.10.03</Text>
-            </View>
-            <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>Time</Text>
-              <Text style={styles.detailValue}>14:35 pm</Text>
-            </View>
+            {/* Adicione mais detalhes se desejar */}
           </View>
+
+          {/* Botão de fechar extra */}
+          <TouchableOpacity style={styles.fecharBtn} onPress={onClose}>
+            <Text style={styles.fecharBtnText}>Fechar</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </Modal>

@@ -209,6 +209,7 @@ return (
         <Text style={styles.fecharMesaBtnText}>Fechar Mesa</Text>
       </TouchableOpacity>
     </View>
-    <BottomMenu />
+    <BottomMenu/>
   </LinearGradient>
 );
+}

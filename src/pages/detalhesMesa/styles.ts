@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    marginTop: 30,
+    marginTop: 100,
     alignItems: "center",
   },
   title: {
@@ -19,6 +19,7 @@ export const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 15,
     width: "90%",
+    height: "60%",
     marginBottom: 10,
   },
   pedidoItem: {
@@ -64,9 +65,9 @@ export const styles = StyleSheet.create({
     alignSelf: "center",
     backgroundColor: "#fff",
     borderRadius: 10,
-    marginTop: 5,
+    marginTop: 30,
     paddingHorizontal: 18,
-    paddingVertical: 5,
+    paddingVertical: 2,
     elevation: 2,
   },
   subtotalLabel: {
@@ -76,7 +77,7 @@ export const styles = StyleSheet.create({
   cardapioBtn: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#FFD166",
+    backgroundColor: "black",
     borderRadius: 15,
     paddingVertical: 15,
     paddingHorizontal: 40,
@@ -87,7 +88,7 @@ export const styles = StyleSheet.create({
   cardapioBtnText: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "#701515",
+    color: "white",
     marginRight: 10,
   },
   cardapioBtnIcon: {
@@ -97,7 +98,7 @@ export const styles = StyleSheet.create({
   pagamentoBtn: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#FFD166",
+    backgroundColor: "black",
     borderRadius: 15,
     paddingVertical: 15,
     paddingHorizontal: 40,
@@ -108,7 +109,7 @@ export const styles = StyleSheet.create({
   pagamentoBtnText: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "#701515",
+    color: "white",
     marginRight: 10,
   },
   pagamentoBtnIcon: {

@@ -60,8 +60,13 @@ export default function Mesas() {
 }
 
     return (
-        <LinearGradient colors={['#D62828', '#701515']} style={styles.container}>
+        <LinearGradient colors={['#7E7E7E', '#FAFAFA']} style={styles.container}>
+            <Image
+                  source={require('../../assets/icon-hamburgueria.png')}
+                  style={{ width: 170, height: 170 }}
+            />
             <View style={styles.box}>
+
                 {mesas.map((mesa) => {
                     const isOcupada = mesa.status === "aberta";
                     const isSelecionada = mesaSelecionada === mesa.id;

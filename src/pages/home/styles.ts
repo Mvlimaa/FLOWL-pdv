@@ -32,9 +32,9 @@ export const styles = StyleSheet.create({
 
         borderRadius: 4,
         borderWidth: 2,
-        borderColor: "purple",
+        borderColor: "red",
 
-        shadowColor: "#000",
+        shadowColor: "red",
         shadowOffset: {
             width: 0,
             height: 2,

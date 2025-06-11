@@ -9,9 +9,10 @@ interface PagamentoProps {
   mesa: number;
   status: "sucesso" | "processando" | "erro";
   formaPagamento: string;
+  fecharMesa: () => void | Promise<void>;
 }
 
-export default function Pagamento({ visible, onClose, valor, mesa, status, formaPagamento }: PagamentoProps) {
+export default function Pagamento({ visible, onClose, valor, mesa, status, formaPagamento, fecharMesa }: PagamentoProps) {
   // Ícone/status visual
   const getStatusIcon = () => {
     if (status === "sucesso") {
@@ -74,8 +75,11 @@ export default function Pagamento({ visible, onClose, valor, mesa, status, forma
           </View>
 
           {/* Botão de fechar extra */}
-          <TouchableOpacity style={styles.fecharBtn} onPress={onClose}>
-            <Text style={styles.fecharBtnText}>Fechar</Text>
+          <TouchableOpacity 
+          style={styles.fecharBtn} 
+          onPress={fecharMesa}>
+            <Text 
+            style={styles.fecharBtnText}>Confirmar Fechamento</Text>
           </TouchableOpacity>
         </View>
       </View>

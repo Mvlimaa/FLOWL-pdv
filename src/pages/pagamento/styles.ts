@@ -59,18 +59,18 @@ export const styles = StyleSheet.create({
     width: "100%",
   },
   amountLabel: {
-    color: "#888",
+    color: "red",
     fontSize: 13,
     marginBottom: 2,
   },
   amountValue: {
-    color: "#3b3bff",
+    color: "green",
     fontSize: 22,
     fontWeight: "bold",
   },
   detailsBox: {
     width: "100%",
-    marginTop: 8,
+    marginTop: 30,
   },
   detailRow: {
     flexDirection: "row",
@@ -85,5 +85,18 @@ export const styles = StyleSheet.create({
     color: "#444",
     fontSize: 14,
     fontWeight: "bold",
+  },
+  fecharBtn: {
+    backgroundColor: "#D62828",
+    borderRadius: 15,
+    paddingVertical: 15,
+    marginTop: 50,
+    width: "80%",
+    alignItems: "center",
+  },
+  fecharBtnText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 16,
   },
 });

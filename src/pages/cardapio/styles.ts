@@ -26,6 +26,7 @@ export const styles = StyleSheet.create({
   },
   categoriaBtnAtiva: {
     backgroundColor: "#fff",
+
   },
   categoriaText: {
     color: "#fff",
@@ -50,19 +51,21 @@ export const styles = StyleSheet.create({
     elevation: 2,
   },
   produtoNome: {
+    color: "black",
     fontWeight: "bold",
     fontSize: 16,
     marginBottom: 4,
-    color: "#222",
+
   },
   produtoCategoria: {
-    fontSize: 13,
+    textAlign: "center",
+    fontSize: 15,
     color: "#555",
     marginBottom: 4,
   },
   produtoPreco: {
     fontSize: 15,
-    color: "#1976d2",
+    color: "green",
     fontWeight: "bold",
   },
   erro: {
@@ -74,18 +77,18 @@ export const styles = StyleSheet.create({
 
   adicionarBtn: {
   marginTop: 8,
-  backgroundColor: "#1976d2",
+  backgroundColor: "black",
   paddingVertical: 6,
   paddingHorizontal: 16,
   borderRadius: 6,
 },
-
 adicionarBtnText: {
-  color: "#fff",
+  color: "white",
   fontWeight: "bold",
+  textAlign: "center",
 },
 categoriaBtnText: {
-  color: "#fff",
+  color: "white",
   fontWeight: "bold",
 },
 categoriaBtnTextAtiva: {

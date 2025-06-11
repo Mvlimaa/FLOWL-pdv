@@ -69,9 +69,15 @@ export default function Cardapio() {
   const produtosFiltrados = produtos.filter(p => p.categoria === categoriaAtiva);
 
 return (
-  <LinearGradient colors={['#D62828', '#701515']} style={styles.container}>
+  <LinearGradient colors={['#7E7E7E', '#FAFAFA']} style={styles.container}>
     {/* Menu de categorias */}
-    <View style={{ flexDirection: "row", justifyContent: "center", marginVertical: 16 }}>
+    <View style={{ flexDirection: "row", justifyContent: "center", marginVertical: 16}}>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{ paddingHorizontal: 10, alignItems: "center" }}
+        style={{ marginVertical: 16, maxHeight: 50 }}
+      >
       {categorias.map(cat => (
         <TouchableOpacity
           key={cat.key}
@@ -91,8 +97,9 @@ return (
           </Text>
         </TouchableOpacity>
       ))}
+    </ScrollView>
     </View>
-    {/* ...restante do código... */}
+    
     {loading ? (
       <ActivityIndicator size="large" color="#fff" style={{ marginTop: 32 }} />
     ) : erro ? (
